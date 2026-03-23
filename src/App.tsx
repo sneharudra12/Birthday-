@@ -21,16 +21,17 @@ import confetti from 'canvas-confetti';
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1000&auto=format&fit=crop";
 
-const STABLE_HERO_PHOTO = "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1000&auto=format&fit=crop";
+const STABLE_HERO_PHOTO = "https://i.imgur.com/GQuLMMF.jpeg";
 
 const STABLE_MEMORIES = [
-  { id: 1, url: "https://images.unsplash.com/photo-1530103862676-fa8c91bbebdd?q=80&w=600&auto=format&fit=crop", title: "Beautiful Smile" },
-  { id: 2, url: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=600&auto=format&fit=crop", title: "Joyful Moments" },
-  { id: 3, url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600&auto=format&fit=crop", title: "Shining Bright" },
-  { id: 4, url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=600&auto=format&fit=crop", title: "Pure Elegance" },
-  { id: 5, url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600&auto=format&fit=crop", title: "Golden Hour" },
-  { id: 6, url: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=600&auto=format&fit=crop", title: "Sweet Laughter" },
-  { id: 7, url: "https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=600&auto=format&fit=crop", title: "Unforgettable Day" },
+  { id: 1, url: "https://i.imgur.com/RwO0KXi.jpeg", title: "Special Memory" },
+  { id: 2, url: "https://i.imgur.com/qgrio4m.jpeg", title: "Beautiful Smile" },
+  { id: 3, url: "https://i.imgur.com/GbfC6Nr.jpeg", title: "Joyful Moments" },
+  { id: 4, url: "https://i.imgur.com/MQsB9Ld.jpeg", title: "Shining Bright" },
+  { id: 5, url: "https://i.imgur.com/bMaFMMf.jpeg", title: "Pure Elegance" },
+  { id: 6, url: "https://i.imgur.com/J2Fv5fD.jpeg", title: "Golden Hour" },
+  { id: 7, url: "https://i.imgur.com/DtMrKAd.jpeg", title: "Sweet Laughter" },
+  { id: 8, url: "https://i.imgur.com/8heBV49.jpeg", title: "Unforgettable Day" },
 ];
 
 // --- Custom Hooks ---
