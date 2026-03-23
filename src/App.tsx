@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { 
   Heart, 
   Music, 
@@ -16,6 +16,22 @@ import {
   Pencil
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+
+// --- Constants ---
+
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1000&auto=format&fit=crop";
+
+const STABLE_HERO_PHOTO = "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1000&auto=format&fit=crop";
+
+const STABLE_MEMORIES = [
+  { id: 1, url: "https://images.unsplash.com/photo-1530103862676-fa8c91bbebdd?q=80&w=600&auto=format&fit=crop", title: "Beautiful Smile" },
+  { id: 2, url: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?q=80&w=600&auto=format&fit=crop", title: "Joyful Moments" },
+  { id: 3, url: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600&auto=format&fit=crop", title: "Shining Bright" },
+  { id: 4, url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=600&auto=format&fit=crop", title: "Pure Elegance" },
+  { id: 5, url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600&auto=format&fit=crop", title: "Golden Hour" },
+  { id: 6, url: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=600&auto=format&fit=crop", title: "Sweet Laughter" },
+  { id: 7, url: "https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=600&auto=format&fit=crop", title: "Unforgettable Day" },
+];
 
 // --- Custom Hooks ---
 
@@ -124,6 +140,7 @@ const PhotoUploader = ({ onUpload, className }: { onUpload: (url: string) => voi
       const reader = new FileReader();
       reader.onloadend = () => {
         onUpload(reader.result as string);
+        alert("Note: This change is temporary and only visible in your current browser session. To make it permanent, you would need to host the image online.");
       };
       reader.readAsDataURL(file);
     }
@@ -134,7 +151,7 @@ const PhotoUploader = ({ onUpload, className }: { onUpload: (url: string) => voi
       <button 
         onClick={() => fileInputRef.current?.click()}
         className="p-2 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm shadow-md hover:scale-110 transition-transform text-pink-500"
-        title="Change Photo"
+        title="Change Photo (Temporary)"
       >
         <Pencil size={16} />
       </button>
@@ -163,6 +180,9 @@ const Hero = ({ photo, onPhotoChange, onPlayMusic }: { photo: string, onPhotoCha
           alt="Sneha Ghosh" 
           className="w-full h-full object-cover rounded-full"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+          }}
         />
       </div>
       <PhotoUploader 
@@ -282,6 +302,9 @@ const Memory = ({ memories, onPhotoChange }: { memories: { id: number, url: stri
                 alt={mem.title} 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+                }}
               />
               <PhotoUploader 
                 onUpload={(url) => onPhotoChange(mem.id, url)} 
@@ -422,21 +445,8 @@ export default function App() {
     }
   };
 
-  const [heroPhoto, setHeroPhoto] = useState(() => {
-    return localStorage.getItem('heroPhoto') || "https://picsum.photos/seed/sneha/400/400";
-  });
-  const [memories, setMemories] = useState(() => {
-    const saved = localStorage.getItem('memories');
-    return saved ? JSON.parse(saved) : [
-      { id: 1, url: "https://picsum.photos/seed/memory1/600/800", title: "Beautiful Smile" },
-      { id: 2, url: "https://picsum.photos/seed/memory2/800/600", title: "Joyful Moments" },
-      { id: 3, url: "https://picsum.photos/seed/memory3/600/600", title: "Shining Bright" },
-      { id: 4, url: "https://picsum.photos/seed/memory4/800/800", title: "Pure Elegance" },
-      { id: 5, url: "https://picsum.photos/seed/memory5/600/800", title: "Golden Hour" },
-      { id: 6, url: "https://picsum.photos/seed/memory6/800/600", title: "Sweet Laughter" },
-      { id: 7, url: "https://picsum.photos/seed/memory7/600/600", title: "Unforgettable Day" },
-    ];
-  });
+  const [heroPhoto, setHeroPhoto] = useState(STABLE_HERO_PHOTO);
+  const [memories, setMemories] = useState(STABLE_MEMORIES);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -444,14 +454,6 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
-
-  useEffect(() => {
-    localStorage.setItem('heroPhoto', heroPhoto);
-  }, [heroPhoto]);
-
-  useEffect(() => {
-    localStorage.setItem('memories', JSON.stringify(memories));
-  }, [memories]);
 
   const toggleTheme = () => {
     setIsDark(!isDark);
