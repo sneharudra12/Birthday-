@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lavender: #e6e6fa;
+  --color-soft-pink: #ffc0cb;
+  --color-glass-bg: rgba(255, 255, 255, 0.2);
+  --color-glass-border: rgba(255, 255, 255, 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-lavender via-white to-soft-pink min-h-screen text-slate-800 transition-colors duration-500;
+  }
+  
+  body.dark {
+    @apply from-slate-900 via-purple-900 to-pink-900 text-slate-100;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-md bg-white/20 border border-white/30 shadow-xl;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-md bg-black/20 border border-white/10 shadow-xl;
+  }
+}
+
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
